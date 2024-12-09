@@ -1,10 +1,15 @@
-const express = require('express')
+const express = require('express');
 const dotenv = require('dotenv');
+const db = require('./models/db');
+const cors = require('cors');
+
 
 //load .env file
 dotenv.config();
 
 const app = express()
+
+app.use(cors());
 
 //define routes
 app.get('/', (req,res) => {
