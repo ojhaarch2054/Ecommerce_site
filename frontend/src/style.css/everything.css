@@ -1,0 +1,11 @@
+.cardList {
+    width: 18rem;
+    margin: 10px;
+}
+
+
+.listItems {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

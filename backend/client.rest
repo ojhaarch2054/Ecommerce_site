@@ -1,2 +1,36 @@
 ### Get Products
 GET https://dummyjson.com/products
+
+
+### Add a new product
+### Add a new product
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+  "title": "New Product1",
+  "description": "This is a new product.",
+  "price": 100,
+  "discountPercentage": 10,
+  "rating": 4.5,
+  "stock": 50,
+  "brand": "BrandName",
+  "thumbnail": "http://example.com/thumbnail.jpg"
+}
+
+### aadd to Cart
+POST http://localhost:3000/products/cart
+Content-Type: application/json
+{
+  "session_id": "12345",
+  "product_id": "67890",
+  "quantity": 2,
+  "title": "New Product2",
+  "description": "This is a new product.",
+  "price": 100,
+  "discountPercentage": 10,
+  "rating": 4.5,
+  "stock": 50,
+  "brand": "BrandName",
+  "thumbnail": "http://example.com/thumbnail.jpg"
+}

@@ -2,12 +2,16 @@ const express = require('express');
 const dotenv = require('dotenv');
 const db = require('./models/db');
 const cors = require('cors');
-
+//include route files
+const productRoute = require('./routes/product')
 
 //load .env file
 dotenv.config();
 
 const app = express()
+
+// Middleware to parse JSON bodies
+app.use(express.json());
 
 app.use(cors());
 
@@ -16,12 +20,8 @@ app.get('/', (req,res) => {
     res.send('Hello, This is root!')
 })
 
-//include route files
-const productRoute = require('./routes/product')
-
 //use routes
 app.use('/products', productRoute)
-
 
 
 const port = process.env.PORT || 3000; 
