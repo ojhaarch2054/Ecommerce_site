@@ -105,9 +105,33 @@ const getCart = async (req, res) => {
   }
 };
 
+//function to delete cart items
+const deleteCartItems = async (req, res) => {
+  //extract id from the request parameters
+  const { id } = req.params;
+  try {
+    //SQL query to delete the item from the cart table where the id matches
+    const result = await pool.query('DELETE FROM cart WHERE id = $1 RETURNING *;', [id]);
+    
+    //check if any rows were affected
+    if (result.rowCount === 0) {
+      //if no rows were affected, return a 404 status with an error message
+      return res.status(404).json({ error: 'Item not found' });
+    }
+    
+    //if the item was deleted, return a 200 status with the deleted item
+    res.status(200).json(result.rows[0]);
+  } catch (error) {
+    //errors that occur during the process
+    console.error('Error deleting cart item:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 module.exports = {
   getProduct,
   postProduct,
   addToCart,
-  getCart
+  getCart,
+  deleteCartItems
 };

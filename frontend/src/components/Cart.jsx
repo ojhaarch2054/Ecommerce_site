@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -24,6 +24,26 @@ const Cart = () => {
       });
   }, [setCartItems]);
 
+  //to delete cart items
+  const deleteBtn = async (itemId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this item?");
+  if (!confirmDelete) {
+    return;
+  }
+    try {
+      //API call to delete the item from the backend
+      await axios.delete(`http://localhost:3000/products/cart/${itemId}`);
+      
+      //update the cartItems state
+      setCartItems((prevItems) => 
+        //filter out the item with the matching id
+        prevItems.filter((item) => item.id !== itemId)
+      );
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  };
+                                
 
 
   return (
@@ -82,6 +102,7 @@ const Cart = () => {
                         <div className="col-md-1 col-lg-1 col-xl-1 text-end">
                           <button
                             className="btn btn-link text-muted"
+                            onClick={() => deleteBtn(item.id)}
                           >
                             <i className="bi bi-trash"></i>
                           </button>
