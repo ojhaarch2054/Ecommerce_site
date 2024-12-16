@@ -8,6 +8,7 @@ import Cart from './components/Cart';
 import Profile from './components/Profile';
 import LogIn from './components/LogIn';
 import { CartProvider } from './context/CartContext';
+import ProductDetail from './components/SeprateProductDetail';
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
           <Route path='/cart' element={<Cart />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/logIn' element={<LogIn />} />
-        </Routes>
+          <Route path="/product/:id" element={<ProductDetail />} /> 
+          </Routes>
       </Router>
     </CartProvider>
   );

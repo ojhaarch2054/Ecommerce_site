@@ -128,10 +128,31 @@ const deleteCartItems = async (req, res) => {
   }
 };
 
+//to get one product
+const getOneItem = async (req, res) => {
+  //extract id from the request parameters
+  const { id } = req.params;
+  try {
+    //get request to fetch API data for a specific product
+    const response = await axios.get(`https://dummyjson.com/products/${id}`);
+    //the JSON response data with an indentation of 2 spaces
+    const formattedData = JSON.stringify(response.data, null, 2);
+    //set the response header to indicate that the content type is JSON
+    res.setHeader("Content-Type", "application/json");
+    //send the formatted JSON data as the response
+    res.send(formattedData);
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    res.status(500).send("Error fetching product");
+  }
+};
+
+
 module.exports = {
   getProduct,
   postProduct,
   addToCart,
   getCart,
-  deleteCartItems
+  deleteCartItems,
+  getOneItem
 };

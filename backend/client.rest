@@ -34,3 +34,6 @@ Content-Type: application/json
   "brand": "BrandName",
   "thumbnail": "http://example.com/thumbnail.jpg"
 }
+
+### Get Product by ID
+GET https://dummyjson.com/products/1
