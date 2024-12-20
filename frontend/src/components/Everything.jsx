@@ -3,7 +3,8 @@ import axios from "axios";
 //import { Link } from "react-router-dom";
 import "../style.css/everything.css";
 import { CartContext } from "../context/CartContext.jsx";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import MainPicture from "./MainPicture.jsx";
 
 const Everything = () => {
   //to save the list of products
@@ -13,7 +14,6 @@ const Everything = () => {
   //state to change the btn text
   const [buttonTexts, setButtonTexts] = useState({});
   const navigate = useNavigate();
-
 
   //useEffect hook to fetch data when the component mounts
   useEffect(() => {
@@ -41,7 +41,7 @@ const Everything = () => {
       });
   }, []); //effect runs once when the component mounts
 
-  const addProduct = ( product) => {
+  const addProduct = (product) => {
     //post request to add the product to the products table
     axios
       .post("http://localhost:3000/products", product)
@@ -70,9 +70,9 @@ const Everything = () => {
       })
       .then((response) => {
         console.log("Product added to cart:", response.data);
-        
+
         setButtonTexts((prev) => ({
-            //spread the previous state to retain the existing button texts
+          //spread the previous state to retain the existing button texts
           ...prev,
           //update the button text for the specific product ID to "Added to Cart"
           [product.id]: "Added to Cart",
@@ -87,35 +87,33 @@ const Everything = () => {
       });
   };
 
-
   //map over the list of products to create list items
   const listItems = lists.map((list) => (
-      <div key={list.id || list.title} className="card cardList">
-        {/*check if the product has images and display the first one */}
-        {list.images && list.images.length > 0 && (
-          <img src={list.images[0]}
-           alt={list.title}
-          className="card-img-top"
+    <div key={list.id || list.title} className="card cardList shadow-lg p-3 mb-5 rounded">
+      {/*check if the product has images and display the first one */}
+      {list.images && list.images.length > 0 && (
+        <img
+          src={list.images[0]}
+          alt={list.title}
+          className="card-img-top "
           onClick={() => navigate(`/product/${list.id}`)}
-          />
-        )}
-        <div className="card-body">
-          <h5 className="card-title">{list.title}</h5>
-          <p className="card-text">{list.description}</p>
-          <button
-            className="btn btn-primary"
-            onClick={() => addProduct(list)}
-          >
-            {buttonTexts[list.id] || "Add to Cart"}
-          </button>
-        </div>
+        />
+      )}
+      <div className="card-body">
+        <h5 className="card-title">{list.title}</h5>
+        <p className="card-text">{list.description}</p>
+        <p className="card-text">${list.price}</p>
+        <button className="btn button" onClick={() => addProduct(list)}>
+          {buttonTexts[list.id] || "Add to Cart"}
+        </button>
       </div>
- 
+    </div>
   ));
 
   return (
     <div>
-      <h1>Everything</h1>
+      <MainPicture />
+      <h1 className="header">Choose the things you want</h1>
       <div className="listItems">{listItems}</div>
     </div>
   );

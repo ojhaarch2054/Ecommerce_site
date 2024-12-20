@@ -1,3 +1,7 @@
+body {
+    font-family: 'Arial, sans-serif' !important;
+}
+
 .shippingFee1{
     color: green;
      font-weight: bold;

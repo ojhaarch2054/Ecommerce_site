@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
+import "../style.css/navbar.css"
 
 const NavBar = () => {
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -10,7 +11,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light custom-nav">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">LOGO</Link>
         <button
