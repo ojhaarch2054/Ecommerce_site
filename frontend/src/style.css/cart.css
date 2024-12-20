@@ -11,3 +11,29 @@ body {
     color: blue;
     font-Weight: bold;
 }
+
+#form1{
+    color: black !important;
+}
+
+.inputField{
+    width: 40px;
+}
+
+.trash_icon{
+    color: red;
+    font-size: x-large;
+}
+
+.trash_icon:hover{
+    font-size: xx-large;
+}
+
+.checkoutBtn{
+    background-color: orange;
+}
+
+.checkoutBtn:hover {
+    background-color: black !important;
+    color: orange;
+}

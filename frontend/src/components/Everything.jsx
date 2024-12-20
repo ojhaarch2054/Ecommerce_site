@@ -23,7 +23,7 @@ const Everything = () => {
       .get("http://localhost:3000/products")
       .then((response) => {
         console.log("promise fulfilled");
-        console.log("response data:", response.data);
+        //console.log("response data:", response.data);
         //check if the response data is an array of products
         if (Array.isArray(response.data.products)) {
           //update the state with the fetched products

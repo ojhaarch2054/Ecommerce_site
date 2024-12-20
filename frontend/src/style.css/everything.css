@@ -28,3 +28,8 @@ body{
   .button {
     background-color: orange !important;
   }
+
+  .button:hover {
+    background-color: black !important;
+    color: orange !important;
+}

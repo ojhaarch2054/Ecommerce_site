@@ -129,7 +129,7 @@ const deleteCartItems = async (req, res) => {
 };
 
 //to get one product
-const getOneItem = async (req, res) => {
+const getOneItems = async (req, res) => {
   //extract id from the request parameters
   const { id } = req.params;
   try {
@@ -147,6 +147,37 @@ const getOneItem = async (req, res) => {
   }
 };
 
+const updateQuantity = async (req, res) => {
+  const { id } = req.params;
+  const { quantity, price } = req.body;
+
+  try {
+    // Validate quantity
+    if (quantity < 1) {
+      return res.status(400).json({ error: 'Quantity must be at least 1' });
+    }
+
+    // Update the quantity and price in the cart database
+    const updateQuery = `
+      UPDATE cart
+      SET quantity = $1, price = $2
+      WHERE product_id = $3
+      RETURNING *;
+    `;
+    const values = [quantity, price, id];
+    const result = await pool.query(updateQuery, values);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Product not found in cart' });
+    }
+
+    const updatedCartItem = result.rows[0];
+    res.json(updatedCartItem);
+  } catch (error) {
+    console.error('Error updating quantity:', error);
+    res.status(500).send("Error updating quantity");
+  }
+};
 
 module.exports = {
   getProduct,
@@ -154,5 +185,6 @@ module.exports = {
   addToCart,
   getCart,
   deleteCartItems,
-  getOneItem
+  getOneItems,
+  updateQuantity,
 };
