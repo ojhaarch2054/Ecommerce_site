@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../style.css/cart.css"
 
 const Cart = () => {
   const { cartItems, setCartItems } = useContext(CartContext);
@@ -26,16 +27,18 @@ const Cart = () => {
 
   //to delete cart items
   const deleteBtn = async (itemId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this item?");
-  if (!confirmDelete) {
-    return;
-  }
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this item?"
+    );
+    if (!confirmDelete) {
+      return;
+    }
     try {
       //API call to delete the item from the backend
       await axios.delete(`http://localhost:3000/products/cart/${itemId}`);
-      
+
       //update the cartItems state
-      setCartItems((prevItems) => 
+      setCartItems((prevItems) =>
         //filter out the item with the matching id
         prevItems.filter((item) => item.id !== itemId)
       );
@@ -43,8 +46,33 @@ const Cart = () => {
       console.error("Error deleting item:", error);
     }
   };
-                                
 
+  //variable to accumulate the subtotal
+  let subTotal = 0;
+
+  //forEach loop to iterate over cartItems and calculate the subtotal
+  cartItems.forEach((item) => {
+    subTotal = subTotal + (item.price * item.quantity);
+  });
+
+  //for shipping fee
+  let shippingFee = 10;
+  if (subTotal >= 100) {
+    shippingFee = 0;
+  } else {
+    shippingFee = 10;
+  }
+
+  //for tax
+  let taxAmt = 0
+  if(subTotal >= 50){
+    taxAmt = subTotal * (0.10)
+  }else {
+    taxAmt = 0;
+  }
+
+  //total amount
+  let total = subTotal + shippingFee + taxAmt
 
   return (
     <div className="container mt-4">
@@ -76,9 +104,7 @@ const Cart = () => {
                           <h6 className="mb-0">{item.title}</h6>
                         </div>
                         <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
-                          <button
-                            className="btn btn-link px-2"
-                          >
+                          <button className="btn btn-link px-2">
                             <i className="fas fa-minus"></i>
                           </button>
                           <input
@@ -90,9 +116,7 @@ const Cart = () => {
                             className="form-control form-control-sm"
                             readOnly
                           />
-                          <button
-                            className="btn btn-link px-2"
-                          >
+                          <button className="btn btn-link px-2">
                             <i className="fas fa-plus"></i>
                           </button>
                         </div>
@@ -115,6 +139,52 @@ const Cart = () => {
             </div>
           </div>
         ))}
+        <div className="col-lg-4 mt-4">
+          <div className="card cart-summary">
+            <div className="card-body">
+              <h5 className="card-title mb-4">Order Summary</h5>
+              <div className="d-flex justify-content-between mb-3">
+                <span>Subtotal</span>
+                <span>${subTotal.toFixed(2)}</span>
+              </div>
+              {subTotal >= 100 ? (
+                <small className="shippingFee1">
+                  Shipping fee is free for orders over $100!
+                </small>
+              ) : (
+                <small className="shippingFee2">
+                  Shipping fee is $10 for orders under $100.
+                </small>
+              )}
+              <div className="d-flex justify-content-between mb-3">
+                <span>Shipping</span>
+                <span>{shippingFee}</span>
+              </div>
+              <div className="d-flex justify-content-between mb-3">
+                <span>Tax</span>
+                <span>{taxAmt.toFixed(2)}</span>
+                
+              </div>
+              {subTotal >= 50 ? (
+                <small className="shippingFee1">
+                  Tax fee is 10%!
+                </small>
+              ) : (
+                <small className="shippingFee2">
+                  No tax fee for orders under $50.
+                </small>
+              )}
+              <hr />
+              <div className="d-flex justify-content-between mb-4">
+                <strong>Total</strong>
+                <strong>{total}</strong>
+              </div>
+              <button className="btn btn-success w-100">
+                Proceed to Checkout
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
