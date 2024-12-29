@@ -6,7 +6,7 @@ import Contact from './components/ContactUs';
 import Cart from './components/Cart';
 import Profile from './components/Profile';
 import LogIn from './components/LogIn';
-import { CartProvider } from './context/CartContext';
+import { CartProvider } from './components/context/CartContext';
 import ProductDetail from './components/SeprateProductDetail';
 import SignUp from './components/SignUp';
 import Home from './components/Home';

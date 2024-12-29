@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         setAuth(null);
         //remove the token from localStorage or cookies
-        //localStorage.removeItem("authToken");
+        localStorage.removeItem("authToken");
       };
 
     //return the AuthContext.Provider component with the auth state and setAuth function as its value

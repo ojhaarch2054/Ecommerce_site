@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 //import { Link } from "react-router-dom";
 import "../style.css/everything.css";
-import { CartContext } from "../context/CartContext.jsx";
+import { CartContext } from "./context/CartContext.jsx";
 import { useNavigate } from "react-router-dom";
 import MainPicture from "./MainPicture.jsx";
 import NavBar from "../components/NavBar.jsx";

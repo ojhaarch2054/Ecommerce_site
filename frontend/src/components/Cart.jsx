@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CartContext } from "../context/CartContext";
+import { CartContext } from "./context/CartContext";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../style.css/cart.css";

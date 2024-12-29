@@ -1,6 +1,7 @@
 const axios = require("axios");
 const pool = require("../models/db");
 
+
 //function to fetch products from an external API
 const getProduct = async (req, res) => {
   try {
