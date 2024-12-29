@@ -1,5 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Everything from './components/Everything';
 import About from './components/About';
@@ -9,14 +8,17 @@ import Profile from './components/Profile';
 import LogIn from './components/LogIn';
 import { CartProvider } from './context/CartContext';
 import ProductDetail from './components/SeprateProductDetail';
+import SignUp from './components/SignUp';
+import Home from './components/Home';
 
 function App() {
   return (
     <CartProvider>
       <Router>
-        <NavBar />
         <Routes>
-          <Route path='/' element={<Everything />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/signUp' element={<SignUp />} />
+          <Route path='/everything' element={<Everything />} />
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/cart' element={<Cart />} />

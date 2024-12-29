@@ -18,9 +18,10 @@ Content-Type: application/json
   "thumbnail": "http://example.com/thumbnail.jpg"
 }
 
-### aadd to Cart
+###add to Cart
 POST http://localhost:3000/products/cart
 Content-Type: application/json
+
 {
   "session_id": "12345",
   "product_id": "67890",
@@ -35,5 +36,17 @@ Content-Type: application/json
   "thumbnail": "http://example.com/thumbnail.jpg"
 }
 
+
 ### Get Product by ID
 GET https://dummyjson.com/products/1
+
+###for user registeration
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "firstname": "John",
+  "lastname": "Doe",
+  "email": "john.doe@example.com",
+  "password": "password123"
+}

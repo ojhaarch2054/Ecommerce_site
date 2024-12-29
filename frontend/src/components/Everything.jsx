@@ -5,6 +5,8 @@ import "../style.css/everything.css";
 import { CartContext } from "../context/CartContext.jsx";
 import { useNavigate } from "react-router-dom";
 import MainPicture from "./MainPicture.jsx";
+import NavBar from "../components/NavBar.jsx";
+
 
 const Everything = () => {
   //to save the list of products
@@ -14,6 +16,7 @@ const Everything = () => {
   //state to change the btn text
   const [buttonTexts, setButtonTexts] = useState({});
   const navigate = useNavigate();
+  
 
   //useEffect hook to fetch data when the component mounts
   useEffect(() => {
@@ -89,7 +92,10 @@ const Everything = () => {
 
   //map over the list of products to create list items
   const listItems = lists.map((list) => (
-    <div key={list.id || list.title} className="card cardList shadow-lg p-3 mb-5 rounded">
+    <div
+      key={list.id || list.title}
+      className="card cardList shadow-lg p-3 mb-5 rounded"
+    >
       {/*check if the product has images and display the first one */}
       {list.images && list.images.length > 0 && (
         <img
@@ -111,11 +117,15 @@ const Everything = () => {
   ));
 
   return (
-    <div>
-      <MainPicture />
-      <h1 className="header">Choose the things you want</h1>
-      <div className="listItems">{listItems}</div>
-    </div>
+    <>
+      <NavBar />
+
+      <div className="smooth-scroll">
+        <MainPicture />
+        <h1 className="header">Choose the things you want</h1>
+        <div className="listItems">{listItems}</div>
+      </div>
+    </>
   );
 };
 

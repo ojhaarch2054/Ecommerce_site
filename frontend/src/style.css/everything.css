@@ -33,3 +33,7 @@ body{
     background-color: black !important;
     color: orange !important;
 }
+
+.smooth-scroll {
+  scroll-behavior: smooth;
+}

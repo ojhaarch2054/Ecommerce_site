@@ -2,8 +2,10 @@ const express = require('express');
 const dotenv = require('dotenv');
 const db = require('./models/db');
 const cors = require('cors');
+
 //include route files
 const productRoute = require('./routes/product')
+const userRoute = require('./routes/user')
 
 //load .env file
 dotenv.config();
@@ -22,6 +24,7 @@ app.get('/', (req,res) => {
 
 //use routes
 app.use('/products', productRoute)
+app.use('/users', userRoute)
 
 
 const port = process.env.PORT || 3000; 

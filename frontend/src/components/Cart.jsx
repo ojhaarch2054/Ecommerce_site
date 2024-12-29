@@ -3,6 +3,7 @@ import { CartContext } from "../context/CartContext";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../style.css/cart.css";
+import NavBar from "./NavBar";
 
 const Cart = () => {
   const { cartItems, setCartItems } = useContext(CartContext);
@@ -146,6 +147,8 @@ const reduceQnt = async (itemId) => {
   };
 
   return (
+    <>
+        <NavBar/>
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-2 text-white">
         <h3 className="fw-bold mb-0 ">Shopping Cart</h3>
@@ -262,6 +265,7 @@ const reduceQnt = async (itemId) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
