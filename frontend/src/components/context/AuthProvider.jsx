@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 //creating a new context object for authentication
 const AuthContext = createContext({});
@@ -8,13 +8,33 @@ export const AuthProvider = ({ children }) => {
     //useState to create an auth state and a function to update it
     const [auth, setAuth] = useState({});
 
-    const logout = () => {
-        setAuth(null);
-        //remove the token from localStorage or cookies
-        localStorage.removeItem("authToken");
+       //useEffect to check for an existing token in localStorage when the component mounts
+       useEffect(() => {
+        const token = localStorage.getItem("authToken");
+        if (token) {
+            setAuth({ token });
+        }
+    }, []);
+
+    const logout = async () => {
+        alert('do you want to log out?')
+        try {
+          const token = localStorage.getItem("authToken");
+          await fetch('http://localhost:3000/users/logout', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          });
+          localStorage.removeItem("authToken");
+          setAuth(null);
+        } catch (error) {
+          console.error("Error logging out:", error);
+        }
       };
 
-    //return the AuthContext.Provider component with the auth state and setAuth function as its value
+    
     return (
         <AuthContext.Provider value={{ auth, setAuth, logout }}>
             {children}

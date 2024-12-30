@@ -3,10 +3,14 @@ import { AuthContext } from "./context/AuthProvider.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from './context/UserProvider';
+import "../style.css/everything.css";
 
 const LogIn = () => {
   //destructure setAuth from AuthContext using useContext hook
-  const { setAuth, auth, logout } = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
+
+  const { fetchUser } = useContext(UserContext);
 
   //for input fields
   const [input, setInput] = useState({
@@ -39,19 +43,35 @@ const LogIn = () => {
   const logInSubmit = async (e) => {
     e.preventDefault();
     console.log("logIn btn clicked");
+    console.log("Input data:", input); 
 
     try {
       //POST request to the login endpoint
       const response = await axios.post("http://localhost:3000/users/login", input);
+      console.log("Login successful:", response.data);
+
       //setting the auth state with the response data
       setAuth(response.data);
       //Store authentication token in local storage
       localStorage.setItem("authToken", response.data.token);
+      // Fetch user data after successful login
+      await fetchUser();
       //navigating to the home page after successful login
       navigate("/");
     } catch (error) {
-      console.error("Login failed:", error);
-      alert("Login failed. Please check your credentials and try again.");
+      if (error.response) {
+        // Server responded with a status other than 200 range
+        console.error("Login failed:", error.response.data);
+        alert(`Login failed: ${error.response.data.message}`);
+      } else if (error.request) {
+        // Request was made but no response received
+        console.error("No response received:", error.request);
+        alert("Login failed. No response from server.");
+      } else {
+        // Something else happened while setting up the request
+        console.error("Error:", error.message);
+        alert(`Login failed: ${error.message}`);
+      }
     }
   };
 
@@ -92,7 +112,7 @@ const LogIn = () => {
                   />
                 </div>
                 {error && <div className="alert alert-danger mt-3">{error}</div>}
-                <button type="submit" className="btn btn-primary w-100">
+                <button type="submit" className="btn button w-100">
                   Log In
                 </button>
               </form>

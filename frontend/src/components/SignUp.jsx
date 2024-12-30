@@ -52,7 +52,7 @@ const SignUp = () => {
         password: hashedPassword,
       };
   
-      const response = await axios.post("http://localhost:3000/users", user);
+      const response = await axios.post("http://localhost:3000/users/signup", user);
   
       console.log("User created:", response.data);
       //navigate to login page
